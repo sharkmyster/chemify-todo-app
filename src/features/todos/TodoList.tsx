@@ -5,7 +5,18 @@ import {
   useDeleteTodoMutation,
   useUpdateTodoMutation,
 } from '../api/apiSlice';
-
+import {
+  Group,
+  Container,
+  Title,
+  Button,
+  Checkbox,
+  TextInput,
+  ActionIcon,
+  List,
+} from '@mantine/core';
+import { IconTrash } from '@tabler/icons-react';
+import classes from './TodoList.module.css';
 export interface Todo {
   id: string;
   title: string;
@@ -19,9 +30,9 @@ const TodoList = () => {
     isSuccess,
     isError,
   } = useGetTodosQuery({ data: { data: [] } });
-  const [addTodo, { isLoading: isAdding }] = useAddTodoMutation();
-  const [deleteTodo, { isLoading: isDeleting }] = useDeleteTodoMutation();
-  const [updateTodo, { isLoading: isUpdating }] = useUpdateTodoMutation();
+  const [addTodo] = useAddTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
 
   const [newTodo, setNewTodo] = React.useState<string>('');
 
@@ -42,38 +53,54 @@ const TodoList = () => {
     content = <div>An error occured</div>;
   } else if (isSuccess) {
     content = (
-      <ul>
+      <List listStyleType="none">
         {todos.data?.map((todo: Todo) => (
-          <li key={todo.id}>
-            <input
-              id={todo.id}
-              type="checkbox"
-              checked={todo.done}
-              onChange={() => updateTodo({ ...todo, done: !todo.done })}
-            />
-            <span>{todo.title}</span>
-            <button onClick={() => deleteTodo({ id: todo.id })}>Delete</button>
-          </li>
+          <List.Item>
+            <Group justify="space-between">
+              <Checkbox
+                size="xl"
+                label={todo.title}
+                checked={todo.done}
+                onChange={() => updateTodo({ ...todo, done: !todo.done })}
+              />
+
+              <ActionIcon
+                color="red"
+                size="compact-md"
+                onClick={() => deleteTodo({ id: todo.id })}
+              >
+                <IconTrash />
+              </ActionIcon>
+            </Group>
+          </List.Item>
         ))}
-      </ul>
+      </List>
     );
   }
 
   return (
-    <>
-      <h1>Chemify Todo App</h1>
+    <Container className={classes.todoApp}>
+      <Title className={classes.title} order={1}>
+        Chemify Todo App
+      </Title>
+
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          id="new-todo"
-          placeholder="Enter a todo"
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
-        />
-        <button type="submit">Add</button>
+        <Group justify="center" p={'2rem'}>
+          <TextInput
+            placeholder="Enter a todo"
+            value={newTodo}
+            onChange={(e) => setNewTodo(e.target.value)}
+            size="xl"
+            flex={1}
+          />
+          <Button type="submit" size="xl">
+            Add
+          </Button>
+        </Group>
       </form>
-      {content}
-    </>
+
+      <Container maw={800}>{content}</Container>
+    </Container>
   );
 };
 

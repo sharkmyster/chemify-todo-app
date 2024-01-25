@@ -1,0 +1,19 @@
+.container {
+  background-color: antiquewhite;
+}
+
+.title {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-size: rem(50px);
+  font-weight: 700;
+  text-align: center;
+  padding: rem(10px) rem(20px);
+
+  @media (max-width: $mantine-breakpoint-md) {
+    font-size: rem(30px);
+  }
+}
+
+.form {
+  background-color: lightcoral;
+}
