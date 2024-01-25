@@ -1,5 +1,22 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+// sorting function that sorts todos by createdAt date
+const sortTodos = (a: Todo, b: Todo) => {
+  return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+};
+
+export interface Todo {
+  id: string;
+  title: string;
+  done: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface TodosResponse {
+  data: Todo[];
+}
+
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8080/' }),
@@ -7,6 +24,10 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getTodos: builder.query({
       query: () => 'todos',
+      transformResponse: (response: TodosResponse) => {
+        response.data = response.data.sort(sortTodos);
+        return response;
+      },
       providesTags: ['Todos'],
     }),
     getTodo: builder.query({
