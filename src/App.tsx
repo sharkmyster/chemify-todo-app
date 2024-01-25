@@ -1,7 +1,9 @@
+import TodoList from './features/todos/TodoList';
+
 function App() {
   return (
     <>
-      <h1>Chemify Todo App</h1>
+      <TodoList />
     </>
   );
 }
