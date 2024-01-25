@@ -27,6 +27,7 @@ const TodoList = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (newTodo.trim() === '') return;
     addTodo({
       title: newTodo,
     });
