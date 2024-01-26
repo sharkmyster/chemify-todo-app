@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw';
+import baseURL from '../../helpers/baseUrl';
 
 const todos = {
   data: [
@@ -20,10 +21,10 @@ const todos = {
 };
 
 export const handlers = [
-  http.get('http://localhost:8080/todos', () => {
+  http.get(baseURL('/todos'), () => {
     return HttpResponse.json(todos);
   }),
-  http.post('http://localhost:8080/todos', () => {
+  http.post(baseURL('/todos'), () => {
     return HttpResponse.json({
       data: {
         id: '53543109-1de3-451c-9106-01dfc1a95902',

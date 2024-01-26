@@ -17,9 +17,11 @@ interface TodosResponse {
   data: Todo[];
 }
 
+const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
+
 export const apiSlice = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8080/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: apiEndpoint }),
   tagTypes: ['Todos'],
   endpoints: (builder) => ({
     getTodos: builder.query({
