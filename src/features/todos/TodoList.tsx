@@ -50,12 +50,12 @@ const TodoList = () => {
   if (isLoading) {
     content = <div>Loading...</div>;
   } else if (isError) {
-    content = <div>An error occured</div>;
+    content = <div role="alert">An error occured</div>;
   } else if (isSuccess) {
     content = (
       <List listStyleType="none">
         {todos.data?.map((todo: Todo) => (
-          <List.Item>
+          <List.Item key={todo.id}>
             <Group justify="space-between">
               <Checkbox
                 size="xl"
@@ -84,7 +84,7 @@ const TodoList = () => {
         Chemify Todo App
       </Title>
 
-      <form onSubmit={handleSubmit}>
+      <form data-testid="todo-form" onSubmit={handleSubmit}>
         <Group justify="center" p={'2rem'}>
           <TextInput
             placeholder="Enter a todo"

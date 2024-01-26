@@ -19,16 +19,12 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Establish API mocking before all tests.
 beforeAll(() => {
   server.listen();
 });
 
 afterEach(() => {
   server.resetHandlers();
-  // This is the solution to clear RTK Query cache after each test
-  // store.dispatch(apiSlice.util.resetApiState());
 });
 
-// Clean up after the tests are finished.
 afterAll(() => server.close());
