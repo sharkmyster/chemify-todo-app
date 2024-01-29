@@ -4,6 +4,7 @@ import {
   useAddTodoMutation,
   useDeleteTodoMutation,
   useUpdateTodoMutation,
+  Todo,
 } from '../api/apiSlice';
 import {
   Group,
@@ -17,11 +18,6 @@ import {
 } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import classes from './TodoList.module.css';
-export interface Todo {
-  id: string;
-  title: string;
-  done: boolean;
-}
 
 const TodoList = () => {
   const {
